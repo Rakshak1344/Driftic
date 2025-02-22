@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:driftic/features/dashboard/data/models/points.dart';
-import 'package:driftic/features/dashboard/data/models/todo_items.dart';
+import 'package:driftic/features/persistence_multi_drift/data/models/points.dart';
+import 'package:driftic/features/in_memory_memory_drift/data/models/todo_items.dart';
 
 part 'app_database.g.dart';
 

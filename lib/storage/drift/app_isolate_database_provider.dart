@@ -1,5 +1,6 @@
 import 'package:drift/isolate.dart';
 import 'package:drift/native.dart';
+import 'package:driftic/arch/logger.dart';
 import 'package:driftic/storage/drift/app_database.dart';
 import 'package:driftic/storage/drift/utils/database_file.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,5 +19,6 @@ Future<AppDatabase> appIsolateDatabase(
   );
 
   var connection = await isolate.connect();
+  log('Database: $databaseName');
   return AppDatabase(connection);
 }
