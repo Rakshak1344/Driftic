@@ -16,7 +16,7 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Isolates Demo"),
+        title: const Text("Drift Isolates Demo"),
       ),
       body: Center(
         child: Column(
@@ -26,11 +26,11 @@ class _MyAppState extends State<MyApp> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const InMemoryMultiDriftPage(),
+                    builder: (context) => const MultiInMemoryDbScreen(),
                   ),
                 );
               },
-              child: const Text("Isolates"),
+              child: const Text("In-Memory Isolates"),
             ),
             ElevatedButton(
               onPressed: () {

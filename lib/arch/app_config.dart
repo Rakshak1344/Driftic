@@ -36,6 +36,7 @@ abstract class AppConfig {
       overrides: _overrides ?? await overrides(),
       observers: await observers(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Isolates Demonstration',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
