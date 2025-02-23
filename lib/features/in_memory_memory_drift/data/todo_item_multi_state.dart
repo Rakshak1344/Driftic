@@ -1,4 +1,4 @@
-import 'package:driftic/features/in_memory_memory_drift/data/services/todo_item_service.dart';
+import 'package:driftic/features/in_memory_memory_drift/data/todo_item_state.dart';
 import 'package:driftic/storage/drift/app_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
@@ -8,12 +8,31 @@ part 'todo_item_multi_state.g.dart';
 @Riverpod(keepAlive: true)
 class TodoItemMultiState extends _$TodoItemMultiState {
   /// Holds active database names
-  final List<String> databaseNames = [];
+  List<String> databaseNames = [];
 
   /// Initializes the state with combined streams from all databases
   @override
   Stream<List<TodoItemEntity>> build() {
-    return _combineDatabaseStreams();
+    if (databaseNames.isEmpty) return Stream.value([]);
+
+    final Iterable<Stream<List<TodoItemEntity>>> streams =
+        databaseNames.map((dbName) {
+      final AsyncValue<List<TodoItemEntity>> asyncValue =
+          ref.watch(todoItemStateProvider(dbName));
+      return asyncValue.maybeWhen<Stream<List<TodoItemEntity>>>(
+        data: (List<TodoItemEntity> stream) => Stream.value(stream),
+        orElse: () => const Stream<List<TodoItemEntity>>.empty(),
+      );
+    });
+
+    return Rx.merge(streams).scan<List<TodoItemEntity>>(
+      (acc, curr, _) {
+        acc ??= [];
+        acc.addAll(curr);
+        return acc;
+      },
+      [],
+    );
   }
 
   /// Creates a new in-memory database based on user request
@@ -38,12 +57,23 @@ class TodoItemMultiState extends _$TodoItemMultiState {
   Stream<List<TodoItemEntity>> _combineDatabaseStreams() {
     if (databaseNames.isEmpty) return Stream.value([]);
 
-    final streams = databaseNames.map((dbName) {
-      return ref.watch(todoItemServiceProvider(dbName)).watch();
+    final Iterable<Stream<List<TodoItemEntity>>> streams =
+    databaseNames.map((dbName) {
+      final AsyncValue<List<TodoItemEntity>> asyncValue =
+      ref.watch(todoItemStateProvider(dbName));
+      return asyncValue.maybeWhen<Stream<List<TodoItemEntity>>>(
+        data: (List<TodoItemEntity> stream) => Stream.value(stream),
+        orElse: () => const Stream<List<TodoItemEntity>>.empty(),
+      );
     });
 
-    return Rx.combineLatestList(streams).map((listOfLists) {
-      return listOfLists.expand((list) => list).toList();
-    });
+    return Rx.merge(streams).scan<List<TodoItemEntity>>(
+          (acc, curr, _) {
+        acc ??= [];
+        acc.addAll(curr);
+        return acc;
+      },
+      [],
+    );
   }
 }
