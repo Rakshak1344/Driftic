@@ -1,16 +1,28 @@
-# driftic
+# driftic (Drift Isolate Cache)
 
-A new Flutter project.
+A Flutter project for the drift isolate in-memory, and persistence databases.
+Having multi instances of databases table's data access at once.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Use FVM if you have or quickly install FVM based on you OS via this link[https://fvm.app/documentation/getting-started/installation] 
 
-A few resources to get you started if this is your first Flutter project:
+Using force will pull the required version for the project.
+```bash
+fvm use --force
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Then, run the following command to get the required dependencies, and gen files for the project.
+```bash
+chmod +x ./build.sh
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+./build.sh
+```
+
+
+Available Screens:
+
+- [x] Multi-Dynamic In-Memory Drift Isolate Based on user's interest.
+- [x] Multi Persistence Drift Isolate.
