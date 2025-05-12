@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
-import 'package:driftic/storage/drift/data/auto_incrementing_primary_key.dart';
+import 'package:driftic/storage/drift/data/has_auto_incrementing_primary_key.dart';
 
 @DataClassName('TodoItemEntity')
-class TodoItems extends Table with AutoIncrementingPrimaryKey{
+class TodoItems extends Table with HasAutoIncrementingPrimaryKey{
 
   TextColumn get title => text().withLength(min: 6, max: 32)();
 
